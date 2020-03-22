@@ -1,0 +1,13 @@
+.banner-section{
+    height: 400px;
+    background-image: url('../../Images/bannerbackground.png');
+    margin-left: -100px;
+    margin-bottom: 50px;
+}
+.banner-section h1{
+    text-align: center;
+    padding-top: 80px;
+}
+.categories{
+    text-align: center;
+}

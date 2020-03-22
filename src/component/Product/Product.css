@@ -1,0 +1,23 @@
+.product{
+    width: 33%;
+    float: left;
+    margin: 0px 0px 35px 0px;
+    text-align: center;
+    padding-top: 20px;
+    height: 300px;
+}
+.product h6{
+    margin-top: 20px;
+    font-weight: 600;
+}
+.short-desc{
+    color: gray;
+}
+.price{
+    color: black;
+}
+.product:hover{
+    width: 34%;
+    border-radius: 5px;
+    box-shadow: 5px 5px 10px lightgray;
+}
