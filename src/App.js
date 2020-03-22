@@ -11,6 +11,7 @@ import {
   Link
 } from "react-router-dom";
 import ProductDetail from './component/ProductDetail/ProductDetail';
+import Shipment from './component/Shipment/Shipment';
 
 function App() {
   
@@ -26,6 +27,10 @@ function App() {
 
           <Route path="/shop">
             <Shop></Shop>
+          </Route>
+
+          <Route path="/shipment">
+            <Shipment></Shipment>
           </Route>
           
           <Route path="/product/:productKey">

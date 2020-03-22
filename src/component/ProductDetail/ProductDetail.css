@@ -32,3 +32,14 @@
     cursor: pointer;
     color: red;
 }
+.cart-button{
+    margin-top: 20px;
+}
+
+.cart-button button{
+    background-color: rgb(219, 49, 49);
+    padding: 10px 30px;
+    border-radius: 15px;
+    border: none;
+    color: white;
+}
