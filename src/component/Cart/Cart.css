@@ -1,0 +1,9 @@
+.cart{
+    margin-bottom: 15px;
+    background-color: lightgray;
+    border-radius: 5px;
+    padding: 3px;
+}
+.cart-detail{
+    margin-left: 10px;
+}

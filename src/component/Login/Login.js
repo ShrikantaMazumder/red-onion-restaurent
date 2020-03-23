@@ -3,7 +3,6 @@ import { useForm } from 'react-hook-form'
 import logo from '../../Images/logo2.png';
 import './Login.css';
 import Auth from './userAuth';
-import { Redirect } from 'react-router-dom';
 
 const Login = () => {
     const auth = Auth();

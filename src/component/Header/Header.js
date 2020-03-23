@@ -4,7 +4,6 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import './Header.css';
 import logo from '../../Images/logo2.png'
 import { useAuth } from '../Login/userAuth';
-import { Link } from 'react-router-dom';
 
 const Header = () => {
     const auth = useAuth();

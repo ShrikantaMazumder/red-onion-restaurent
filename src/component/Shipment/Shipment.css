@@ -1,0 +1,22 @@
+.cart-transaction{
+    margin-top: 40px;
+}
+.cart-transaction .left{
+   width: 70%;
+   float: left;
+}
+.cart-transaction .right{
+    width: 20%;
+    float: right;
+}
+.place-order{
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    width: 100%;
+    background-color: lightgrey;
+}
+.place-order:hover{
+    background-color: rgb(207, 41, 41);
+}

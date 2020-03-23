@@ -5,16 +5,20 @@ import Product from '../Product/Product';
 import fakeData from '../../fakeData';
 import { getDatabaseCart } from '../../utilities/databaseManager';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Login/userAuth';
 
 const Shop = () => {
     const [category,setCategory] = useState("Dinner");
+    const [selectCat,setSelectCat] = useState("Dinner");
     const [cart,setCart] = useState([]);
     const items = fakeData.filter(product => product.category === category);
+    
 
     //Category Handle
     const handleCategory = (e) => {
         let clickedCat = e.target.innerText;
         setCategory(clickedCat);
+        setSelectCat(clickedCat);
     }
     //cart
     useEffect(()=> {
@@ -35,9 +39,9 @@ const Shop = () => {
                 <h1>Best food waiting for your belly</h1>
             </div>
             <div className="categories">
-                <a onClick={handleCategory}>Breakfast</a>
-                <a onClick={handleCategory}>Dinner</a>
-                <a onClick={handleCategory}>Lunch</a>
+                <Link style={{textDecoration: 'none',fontWeight:'bold'}} onClick={handleCategory} className={selectCat === "Breakfast" ? "active-link" : ''}>Breakfast</Link>
+                <Link style={{textDecoration: 'none',fontWeight:'bold'}} onClick={handleCategory} className={category === "Dinner" ? "active-link" : ''}>Dinner</Link>
+                <Link style={{textDecoration: 'none',fontWeight:'bold'}} onClick={handleCategory} className={category === "Lunch" ? "active-link" : ''}>Lunch</Link>
             </div>
             <div>
             {
@@ -46,7 +50,7 @@ const Shop = () => {
             </div>
             <div className="wrapper">
                 <Link className="checkout-link" to="/shipment">
-                    <button className={cart.length === 0 ? 'disabled' : 'active'} disabled={cart.length === 0 ? 'disabled' : ''}>Checkout Your Food</button>
+                    <button className={cart.length === 0 ? 'button-disabled' : 'button-active'} disabled={cart.length === 0 ? 'disabled' : ''}>Checkout Your Food</button>
                 </Link>
             </div>
         </div>
