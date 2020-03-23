@@ -1,0 +1,30 @@
+.signup-form{
+    text-align: center;
+}
+.signup-form img{
+    width: 300px;
+    margin: 20px 0px;
+}
+.signup-form input{
+    width: 400px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    padding: 10px;
+    background-color: lightgray;
+
+}
+.submit-button{
+    width: 400px;
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(216, 52, 52);
+    margin-top: 20px;
+    padding: 10px;
+    color: #ffffff;
+    margin-bottom: 20px;
+}
+.returning-user{
+    color: goldenrod;
+    cursor: pointer;
+}

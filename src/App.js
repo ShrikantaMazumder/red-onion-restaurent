@@ -12,33 +12,41 @@ import {
 } from "react-router-dom";
 import ProductDetail from './component/ProductDetail/ProductDetail';
 import Shipment from './component/Shipment/Shipment';
+import Login from './component/Login/Login';
+import { AuthContextProvider, PrivateRoute } from './component/Login/userAuth';
+
 
 function App() {
-  
   return (
-    <div className="App">
-      <Header></Header>
-      <Router>
-        <Switch>
+    <div>
+      <AuthContextProvider>
+        <Header></Header>
+        <Router>
+          <Switch>
 
-          <Route exact path="/">
-            <Shop></Shop>
-          </Route>
+            <Route exact path="/">
+              <Shop></Shop>
+            </Route>
 
-          <Route path="/shop">
-            <Shop></Shop>
-          </Route>
+            <Route path="/shop">
+              <Shop></Shop>
+            </Route>
 
-          <Route path="/shipment">
-            <Shipment></Shipment>
-          </Route>
-          
-          <Route path="/product/:productKey">
-            <ProductDetail></ProductDetail>
-          </Route>
+            <PrivateRoute path="/shipment">
+              <Shipment></Shipment>
+            </PrivateRoute>
 
-        </Switch>
-      </Router>  
+            <Route path="/login">
+              <Login></Login>
+            </Route>
+            
+            <Route path="/product/:productKey">
+              <ProductDetail></ProductDetail>
+            </Route>
+
+          </Switch>
+        </Router>
+        </AuthContextProvider>
     </div>
   );
 }
