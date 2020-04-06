@@ -6,9 +6,9 @@ import Auth from './userAuth';
 
 const Login = () => {
     const auth = Auth();
+    const [registeredUser,setRegisteredUser] = useState(false);
     const { register,  errors } = useForm()
     
-
     //user setup
     const [user,setUser] = useState({
         isSignedIn: false,
@@ -21,7 +21,7 @@ const Login = () => {
         isValid: false,
       });
 
-      const [registeredUser,setRegisteredUser] = useState(false);
+      
 
       //Form validation
         const formValidation = e => /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(e);
@@ -42,6 +42,7 @@ const Login = () => {
         newUserInfo[e.target.name] = e.target.value;
         newUserInfo.isValid = isValid;
         setUser(newUserInfo);
+        console.log(user,"before signup")
       }
 
     //Handle Signup
@@ -100,6 +101,7 @@ const Login = () => {
                     <button type="submit" className="submit-button">Sign In</button>
                     <span onClick={returningUser} className="returning-user">Create an account</span><br/>
                   </form>
+                  
                     :
 
                     <form onSubmit={handleSignUp} className="d-flex align-items-center flex-column" >
@@ -121,9 +123,6 @@ const Login = () => {
                     <span onClick={returningUser} className="returning-user">Already have an account</span><br/>
                 </form>
                 }
-                
-               
-                <button className="btn btn-primary ml-2">Sign in with google</button>
             </div>
         </div>
     );

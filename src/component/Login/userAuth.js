@@ -46,6 +46,7 @@ const getUser = user => {
 
 const Auth = () => {
     const [user,setUser] = useState(null);
+
     //sign up with email pass
     const signUp = (usr) => {
       

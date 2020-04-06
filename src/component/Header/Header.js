@@ -4,10 +4,10 @@ import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import './Header.css';
 import logo from '../../Images/logo2.png'
 import { useAuth } from '../Login/userAuth';
+import { Link } from 'react-router-dom';
 
 const Header = () => {
     const auth = useAuth();
-    console.log(auth);
     //Handle Signout
     const handleSignOut = () => {
         auth.signOut();
@@ -25,6 +25,7 @@ const Header = () => {
                         <a href="/login">Log in</a>
                     </span>
                 }
+                <a href="/inventory">Inventory</a>
             </div>
         </div>
     );

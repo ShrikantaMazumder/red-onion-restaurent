@@ -15,6 +15,8 @@ import Shipment from './component/Shipment/Shipment';
 import Login from './component/Login/Login';
 import { AuthContextProvider, PrivateRoute } from './component/Login/userAuth';
 import OrderComplete from './component/OrderComplete/OrderComplete';
+import NotFound from './component/NotFound/NotFound';
+import Inventory from './component/Inventory/Inventory';
 
 
 function App() {
@@ -49,9 +51,18 @@ function App() {
               <ProductDetail></ProductDetail>
             </Route>
 
+            <Route path="/inventory">
+              <Inventory></Inventory>
+            </Route>
+
+            <Route path="*">
+              <NotFound></NotFound>
+            </Route>
+
           </Switch>
         </Router>
         </AuthContextProvider>
+        
     </div>
   );
 }

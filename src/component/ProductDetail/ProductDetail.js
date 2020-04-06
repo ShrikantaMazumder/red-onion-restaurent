@@ -5,12 +5,21 @@ import fakeData from '../../fakeData';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faShoppingCart } from '@fortawesome/free-solid-svg-icons'
 import { addToDatabaseCart } from '../../utilities/databaseManager';
+import { useEffect } from 'react';
 
 const ProductDetail = () => {
     const {productKey} = useParams();
-    const product = fakeData.find(pd => pd.key === productKey);
+    const [product,setProduct] = useState([])
     const [quantity,setQuantity] = useState(1)
+   
     
+    useEffect(() => {
+        fetch('https://secret-earth-29040.herokuapp.com/product/'+productKey)
+        .then(res => res.json())
+        .then(data => setProduct(data))
+    },[])
+
+
    //cart
     // const [cart,setCart] = useState([]);
     //Quantity Increment Function

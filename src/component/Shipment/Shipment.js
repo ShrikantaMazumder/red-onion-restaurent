@@ -1,12 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import './Shipment.css'
-import ShipmentDetail from './ShipmentDetail';
+import {loadStripe} from '@stripe/stripe-js';
+import {
+  CardElement,
+  Elements,
+  useStripe,
+  useElements,
+} from '@stripe/react-stripe-js';
 import Cart from '../Cart/Cart';
-import { getDatabaseCart } from '../../utilities/databaseManager';
-import fakeData from '../../fakeData';
+import { getDatabaseCart, processOrder } from '../../utilities/databaseManager';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../Login/userAuth';
+import { useForm } from 'react-hook-form';
+import CheckoutForm from '../CheckoutForm/CheckoutForm';
 
 const Shipment = () => {
+    const [shipInfo,setShipInfo] = useState(null);
+    const [orderId,setOrderId] = useState(null);
+    const auth = useAuth();
+    const stripePromise = loadStripe('pk_test_pO5hGePb6m1AUqxRUpOS3oqD00dBLzVK36');
+    const { register, handleSubmit, watch, errors } = useForm()
+    const onSubmit = data => {
+      setShipInfo(data);
+    }
+    //Cart Total transaction
     const [cart,setCart] = useState([]);
     const totalPrice = cart.reduce((total,product) => total + (product.price * product.quantity),0);
     const tax = 5;
@@ -14,22 +31,88 @@ const Shipment = () => {
     const grandTotal = (totalPrice + tax + deliveryCharge);
     const totalItems = cart.length;
 
-    useEffect(()=>{
+    //cart
+    useEffect(()=> {
         const savedCart = getDatabaseCart();
         const productKeys = Object.keys(savedCart);
-        const cartProducts = productKeys.map(key => {
-            const product = fakeData.find(pd => pd.key === key);
-            product.quantity = savedCart[key];
-            return product;
+        fetch('https://secret-earth-29040.herokuapp.com/get-cart-product',{
+            method: "POST",
+            body: JSON.stringify(productKeys),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
         })
-        setCart(cartProducts);
-    } ,[]);
+        .then(res => res.json())
+        .then(data => {
+            const cartProducts = productKeys.map(key => {
+                const product = data.find(product => product.key === key);
+                product.quantity = savedCart[key];
+                return product;
+            })
+            setCart(cartProducts);
+        })
+        
+    },[])
+
+    //Place order
+    const handlePlaceOrder = (payment) => {
+        const orderDetails = {
+            email:auth.user.email,
+            cart: cart,
+            shipment: shipInfo,
+            payment: payment,
+        }
+        fetch('https://secret-earth-29040.herokuapp.com/place-order',{
+            method: "POST",
+            body: JSON.stringify(orderDetails),
+            headers: {
+                "Content-type": "application/json; charset=UTF-8"
+            }
+        })
+        .then(res => res.json())
+        .then(order => {
+            setOrderId(order._id)
+            processOrder();
+        })
+        
+    }
     
     
     return (
         <div className="container shipment-section">
             <div className="row">
-                <ShipmentDetail></ShipmentDetail>
+                    <div style={{display: shipInfo && 'none'}} className="col-md-8 shipment">
+                        <h2>Shipping Details</h2>
+                        <form onSubmit={handleSubmit(onSubmit)}>
+                        <input name="name" defaultValue={auth.user.name} ref={register({ required: true })} />
+                        {errors.name && <span>This field is required</span>}
+                        <input name="email" defaultValue={auth.user.email} ref={register({ required: true })} />
+                        {errors.email && <span>This field is required</span>}
+                        <input name="address1" ref={register({ required: true })} placeholder="Address 1" />
+                        {errors.address1 && <span>This field is required</span>}
+                        <input name="address2" ref={register({ required: true })} placeholder="Address 2"/>
+                        {errors.address2 && <span>This field is required</span>}
+                        <input name="country" ref={register({ required: true })} placeholder="Country"/>
+                        {errors.country && <span>This field is required</span>}
+                        <input name="city" ref={register({ required: true })} placeholder="City"/>
+                        {errors.city && <span>This field is required</span>}
+                        <input name="zipcode" ref={register({ required: true })} placeholder="Zip Code"/>
+                        {errors.zipcode && <span>This field is required</span>}
+                        <button type="submit" className="submit-button">Save & Continue</button>
+                        </form>
+                    </div>
+                <div style={{display: shipInfo? 'block' : 'none'}} className="col-md-8 shipment">
+                    <h2>Payment Details</h2>
+                    <Elements stripe={stripePromise}>
+                        <CheckoutForm handlePlaceOrder={handlePlaceOrder}></CheckoutForm>
+                    </Elements>
+                    {
+                        orderId && <div>
+                            <h3>Thank you for shopping with us.</h3>
+                            <p>Your id is: {orderId}</p>
+                        </div>
+                    }
+                </div>
                 <div className="col-md-4">
                     <div>
                         <p>From <strong>Gulshan Plaza Restaura GPR</strong></p>
@@ -53,7 +136,7 @@ const Shipment = () => {
                             <p><strong>${grandTotal}</strong></p>
                         </div>
                     </div>
-                    <Link to="/place-order"><button className="place-order">Place Order</button></Link>
+                    <Link to="/place-order"><button className="place-order">Check Location</button></Link>
                 </div>
             </div>
         </div>
