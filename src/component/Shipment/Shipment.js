@@ -2,10 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './Shipment.css'
 import {loadStripe} from '@stripe/stripe-js';
 import {
-  CardElement,
   Elements,
-  useStripe,
-  useElements,
 } from '@stripe/react-stripe-js';
 import Cart from '../Cart/Cart';
 import { getDatabaseCart, processOrder } from '../../utilities/databaseManager';
@@ -19,7 +16,7 @@ const Shipment = () => {
     const [orderId,setOrderId] = useState(null);
     const auth = useAuth();
     const stripePromise = loadStripe('pk_test_pO5hGePb6m1AUqxRUpOS3oqD00dBLzVK36');
-    const { register, handleSubmit, watch, errors } = useForm()
+    const { register, handleSubmit, errors } = useForm()
     const onSubmit = data => {
       setShipInfo(data);
     }
