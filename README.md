@@ -23,6 +23,8 @@ Here are the technologies
 + MongoDB
 + Heroku
 + Demo map for ordered for restaurant
++ Git for version control
+
 
 > The site is live here
 
